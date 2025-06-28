@@ -1,0 +1,19 @@
+{
+  "name": "wso2is-repo-explorer-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "scripts": {
+    "start": "concurrently \"node index.js\" \"npm start --prefix frontend\"",
+    "backend": "node index.js",
+    "dev": "concurrently \"node index.js\" \"npm start --prefix frontend\"",
+    "postinstall": "npm install --prefix frontend"
+  }
+}
