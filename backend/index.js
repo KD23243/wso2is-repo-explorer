@@ -1,10 +1,11 @@
 const express = require('express');
 const { exec } = require('child_process');
-const cors = require('cors');
+const path = require('path');
 const app = express();
 const port = 3001;
 
-app.use(cors());
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 app.use(express.json());
 
 // POST /api/search { query: string, component: boolean }
@@ -26,6 +27,11 @@ app.post('/api/search', (req, res) => {
   });
 });
 
+// Fallback to index.html for SPA routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
+
 app.listen(port, () => {
-  console.log(`Backend listening at http://localhost:${port}`);
+  console.log(`Server listening at http://localhost:${port}`);
 });
