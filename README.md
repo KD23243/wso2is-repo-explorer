@@ -1,116 +1,81 @@
-# Repo Explorer (rEx) for Identity Server (IS)
+# WSO2 Identity Server Repository Explorer (rEx)
 
-# Happy rEx*ing*!
+WSO2 Identity Server is a fully open-source platform. Its vast codebase spans hundreds of repositories across the `wso2` and `wso2-extensions` GitHub organizations. While this modular architecture is powerful, it can make it challenging to figure out which repository a particular JAR file or component comes from.
 
-[WSO2 Identity Server](https://wso2.com/identity-and-access-management/) is 100% open source!. The product maintains the source code under two GitHub organizations: [wso2](https://github.com/wso2) and [wso2-extensions](https://github.com/wso2-extensions). These two GitHub organizations carry code related to all WSO2 products, with hundreds of repositories. Sometimes it's hard to find, which jar file comes from which repo. We built rEx to address that concern.
+rEx was created to solve exactly this problem—making it easy to explore the WSO2 ecosystem. It’s especially helpful for external developers, newcomers, and anyone who wants to understand the project’s structure without having to piece everything together manually.
 
-<img src="./image.png" width="640">
+## ✨ What’s New?
 
-## Setup
+Earlier versions of rEx were command-line tools that required more technical setup and familiarity with CLI workflows.
 
-Step-1: The tool relies on Docker, so make sure you have Docker running in your local environment.
+The latest release introduces a modern web-based frontend, dramatically simplifying the experience.
 
-Step-2: Copy rex.sh to a directory where you want to maintain Identity Server git repositories. Alway better to keep this readonly. 
-```markdown
-wget https://github.com/prabath/wso2is-repo-explorer/raw/master/rex.sh
-chmod +x rex.sh
-```
-Also please make sure that you have Internet access, while running the tool. To run the tool with no Internet connection, after the first run, set the REX_ONLONE environment variable to false. The **clone**, **list**, **update**, **update-index** functions are not availble for the offline mode. By defeault REX_ONLONE is set to true - and **the tool to function you must run it at least once in the online mode**.
-```markdown
-export REX_ONLINE=false
-```
-By default the output on the console is in color. Sometimes when you want to redirect the output to a file, it is useful to remove color. Set the REX_COLOR environment variable to false to turn off color.
+✅ No more CLI commands.  
+✅ Search directly in your browser.  
+✅ Get instant visibility into the repositories.
 
-```markdown
-export REX_COLOR=false
-```
-## Updates
+## 🌱 Who Should Use This?
 
-There are three components need to be updated. The rex.sh - will have minimal updates. Any changes to the core of the tool would require updating the Docker image. The indexes will get updated every four hours.
+✅ External developers integrating with WSO2 Identity Server  
+✅ New contributors and engineers exploring the codebase  
+✅ Maintainers who want a faster way to locate specific modules
 
-The tool will detect all the updates and will automatically install them (only if the tool is running under online mode).
+Whether you’re building integrations or learning how everything fits together, the intuitive web interface makes discovery effortless.
 
-The following command updates metadata related to all Identity Server repos. Usually you do not need to do it manually, as the tool detects any new updates and automatically updates the indexes.
+## 🚀 Getting Started
 
-```markdown
-./rex.sh update-index
-```
-## Community
+The tool uses Docker for backend services and Node.js for the frontend.
 
-rEx is an open source project (under Apache 2.0 lincense) and any contributions from the wider community is much appreciated. We welcome contribution from the community. Please check the source code at [https://github.com/prabath/wso2is-repo-explorer](https://github.com/prabath/wso2is-repo-explorer)
+1️⃣ **Install and start Docker on your machine.**
 
-Report any issues: [https://github.com/prabath/wso2is-repo-explorer/issues](https://github.com/prabath/wso2is-repo-explorer/issues)
+2️⃣ **Install frontend dependencies:**
 
-## Usage 
+```bash
+npm install
+````
 
-### Repository Operations 
+3️⃣ **Start the application:**
 
-Clones all Identity Server related repositories. This is not a required step to run other commands.
-
-```markdown
-./rex.sh clone
-```
-Lists out all Identity Server related repositories. You can do this, even without cloning all repos.
-
-```markdown
-./rex.sh list
-```
-Updates all Identity Server related repositories. If there are any new repos, those will be cloned. 
-
-```markdown
-./rex.sh update
-```
-### Search Operations 
-
-Finds the git repo(s), by the given name. You can do this, even without cloning all repos. The -c option will narrow down the search results for the given component name (or jar file name without version)
-
-```markdown
-./rex.sh find org.wso2.carbon.identity.authenticator.mutualssl
+```bash
+npm start
 ```
 
-```markdown
-./rex.sh find -c org.wso2.carbon.identity.authenticator.mutualssl
+Once running, the web interface will be available at:  
+👉 http://localhost:5173/
+
+## 🔍 How to Search
+
+You can locate repositories and components in multiple ways:
+
+🔹 **Search by Component or JAR File** Provide the component name or JAR file name (without the version):
+
+```pgsql
+org.wso2.carbon.identity.event.handler.notification
 ```
 
-```markdown
-./rex.sh find OAuth2TokenValidator
+🔹 **Search by Class Name** Enter the exact class name to find its location:
+
+```java
+JWTBasicAuthenticator.java
 ```
 
-```markdown
-./rex.sh find OAuth2TokenValidator.java
+🔹 **Search by Keyword or Phrase** Use any keyword, and rEx will look for matches across repositories:
+
+```nginx
+smsotp
 ```
 
-```markdown
-./rex.sh find samlsso
+## 🙌 Contributing
+
+This project is open source, released under the Apache 2.0 License. Contributions of all kinds are welcome\!
+
+This version is a fork of the original project by Prabath Siriwardena.
+
+**Original Source Code:** [https://github.com/prabath/wso2is-repo-explorer](https://github.com/prabath/wso2is-repo-explorer)
+
+**Report Issues:** [https://github.com/prabath/wso2is-repo-explorer/issues](https://github.com/prabath/wso2is-repo-explorer/issues)
+
+We encourage you to report bugs, suggest improvements, or submit pull requests to help make rEx even better\!
+
 ```
-### Product Updates (Patches) 
-
-**The product updates are provided via WSO2 Update Manager ([WUM](https://wso2.com/updates/wum)). These updates are not open source and provided only to the WSO2 customers and trial users. This tool does not provide any updates - but simply uses the publicly available metadata via the WUM tool to generate some useful information.**
-
-Lists the git repo(s), along with all the corresponding updates since IS 5.2.0. 
-
-```markdown
-./rex.sh updates
-```
-
-Lists the git repo(s), along with all the updates since IS 5.2.0 for the given component name (jar file name without version).
-
-```markdown
-./rex.sh updates -c  org.wso2.carbon.identity.recovery.ui
-```
-
-Lists the updates along with all the components since IS 5.2.0 for the given repo.
-
-```markdown
-./rex.sh updates -r carbon-identity-framework
-```
-Lists the updates by all the product versions.
-
-```markdown
-./rex.sh updates -p
-```
-Lists the updates by the given product version.
-
-```markdown
-./rex.sh updates -p IS_5.2.0
 ```
