@@ -65,6 +65,13 @@ JWTBasicAuthenticator.java
 smsotp
 ```
 
+## 🎥 Demo
+
+
+https://github.com/user-attachments/assets/dcb7d95d-1af2-4b5b-8eb1-418afc3011b5
+
+
+
 ## 🙌 Contributing
 
 This project is open source, released under the Apache 2.0 License. Contributions of all kinds are welcome\!
